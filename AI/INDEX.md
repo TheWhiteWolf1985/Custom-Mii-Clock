@@ -8,9 +8,12 @@ Fonte iniziale: `xiaomi-mi-smart-clock-x04g-passaggio-consegne.md`. Le informazi
 2. `PROJECT/PRD.md` — risultato desiderato e accettazione.
 3. `PROJECT/INVENTORY.md` e `PROJECT/STACK.md` — asset, partizioni e ambiente.
 4. `KNOWLEDGE/DECISIONS.md`, `KNOWLEDGE/RISKS.md`, `KNOWLEDGE/ASSUMPTIONS.md`.
+   Per gli aggiornamenti launcher leggere anche `KNOWLEDGE/OTA.md`.
 5. `PROJECT/RUNBOOK.md` — comandi noti e procedura sicura.
 6. `EXECUTION/CLEANUP_BASELINE_014.md` — allowlist, delete-list e struttura Git della baseline.
 7. `EXECUTION/TASKS.md` e `EXECUTION/NEXT_ACTIONS.md` — attività ordinate.
+8. `CHECKLISTS/OTA_AUDIT_017.md` e `EXECUTION/OTA_PHYSICAL_TEST_PLAN_017.md`
+   — gate OTA prima di qualunque installazione.
 
 ## Stato sintetico
 

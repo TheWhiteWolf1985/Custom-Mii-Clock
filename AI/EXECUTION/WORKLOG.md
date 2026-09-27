@@ -162,3 +162,53 @@
 - CRUD, trigger, suono, Snooze e Stop sono considerati accettati; ricorrenza,
   ripianificazione, persistenza e arresto automatico restano nella regressione
   unificata della V1, non come sviluppo funzionale ancora aperto.
+
+## 2026-09-27 — Launcher v0.16.0 Memoria
+
+- Creato `codex/memory-settings-v0.16.0` da `develop` e aggiunta la pagina
+  Android-like `Impostazioni > Memoria` con sei tile verticali.
+- RAM totale/disponibile, PSS MiiClock, pressione `lowMemory`, soglia low-memory,
+  stato low-RAM e heap limit derivano da API Android reali.
+- Il PSS Assistant usa Magisk soltanto per leggere il `TOTAL PSS` Android dei
+  processi `com.google.assistant.core`, inclusa la memoria grafica.
+- Test host, lint, due build e due firme indipendenti byte-identiche: PASS;
+  certificato persistente invariato e vault richiuso.
+- Installazione 0.16.0/code 29 PASS; APK installato e candidato hanno SHA-256
+  `bff04cbfc45206a22fcfc7b98ac58ef7dda5d234fd266e87947baa13a038ddb1`.
+- Due campioni fisici mostrano 980 MiB totali, PSS MiiClock 24,2 MiB, PSS
+  Assistant 26,0–26,4 MiB, pressione normale, soglia 144 MiB e heap 128 MiB.
+- Screenshot, webcam, scorrimento e controllo crash/ANR PASS. Nessun flash o
+  rollback; la 0.16.0 resta installata ed è stata accettata dall'utente.
+
+## 2026-09-27 — Launcher v0.17.0 OTA firmato
+
+- Creato `codex/ota-updates-v0.17.0` da `develop`; il Clock resta sulla 0.16.0.
+- Implementato client GitHub Releases fail-closed, manifest RSA firmato,
+  controllo package/certificato/hash/versione/firmware e blocco downgrade.
+- Aggiunti processo `:updater`, job giornaliero, download atomico, stato
+  persistente, backup APK, health check, rollback e boot guard temporaneo.
+- Chiave privata creata soltanto nel vault LUKS; pubblica e fingerprint
+  versionati; vault richiuso.
+- Suite host con 31 controlli OTA e build/lint Android PASS. Audit e piano
+  fisico prodotti; nessuna installazione o modifica firmware eseguita.
+
+## 2026-09-27 — Primo OTA reale 0.17.2 → 0.17.3
+
+- Configurato il token GitHub fine-grained nel Credential Manager; revocata la
+  vecchia deploy key e rimossi soltanto alias e coppia SSH dedicati.
+- Reso pubblico il repository GitHub, contenente soltanto `AI/`, dopo scan
+  mirato senza credenziali o chiavi; il PAT non è presente sul Clock.
+- La 0.17.1 è stata rilevata e firmata correttamente, ma il download è stato
+  bloccato con `APK_SIGNER` prima dell'installazione a causa del PackageManager
+  vendor Android 10; launcher 0.17.0 rimasto intatto.
+- Implementato il fallback compatibile `GET_SIGNATURES`, mantenendo signer
+  unico e fingerprint ufficiale obbligatori; bootstrap 0.17.2/code 32 installato
+  via ADB e verificato.
+- Costruita 0.17.3/code 33 con due build, due firme APK e due manifest byte-
+  identici; release GitHub pubblica riletta anonimamente e firma verificata.
+- Test reale PASS: `UPDATE_AVAILABLE`, `DOWNLOADED`, backup rollback 0.17.2,
+  installazione watchdog, health check e stato persistente `SUCCESSFUL`.
+- Dopo riavvio: APK installato SHA-256
+  `5b56f2b53f7ac72473824f64c2333419bed9e59b2eec1bcff0d9ac0fd09b38f8`,
+  HOME MiiClock, ADB root, USB `adb`, Wi-Fi e rollback integri; zero crash/ANR.
+- Nessun fastboot, flash, wipe o intervento sulle partizioni; vault LUKS chiuso.

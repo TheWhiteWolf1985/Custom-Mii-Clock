@@ -97,7 +97,7 @@
 
    Il punto funzionale è quindi chiuso. Sveglie ricorrenti, ordinamento,
    ripianificazione dopo riavvio, persistenza e arresto automatico rimangono
-   inclusi nella regressione unificata della V1 al punto 10, senza bloccare
+   inclusi nella regressione unificata della V1 al punto 11, senza bloccare
    ulteriormente lo sviluppo delle funzioni mancanti.
 
 8. **Aspetto — COMPLETATO (launcher 0.14.0)**
@@ -137,7 +137,23 @@
 
    Evidenze e report sono in `releases/0.13.0/evidence/DEVICE_ACCEPTANCE.md`.
 
-10. **Collaudo completo della v1**
+10. **Memoria — COMPLETATA (launcher 0.16.0)**
+
+    - Accettazione utente registrata il 2026-09-27.
+
+    Implementata e verificata fisicamente sul Clock in `Impostazioni > Memoria`:
+    - RAM totale e disponibile reali;
+    - PSS MiiClock tramite API Android;
+    - `TOTAL PSS` aggregato di Assistant, inclusa la memoria grafica;
+    - pressione `lowMemory`, soglia di sistema e stato low-RAM;
+    - limite heap del processo;
+    - aggiornamento ogni cinque secondi e scorrimento verticale Android-like.
+
+    Due campioni, screenshot e webcam hanno confermato valori coerenti, layout
+    800×480 e assenza di crash/ANR. Evidenze in
+    `MiiClockLauncher/releases/0.16.0/evidence/DEVICE_ACCEPTANCE.md`.
+
+11. **Collaudo completo della v1**
 
     Dopo le implementazioni bisognerà eseguire un gate unico comprendente:
     - più riavvii e almeno uno spegnimento completo;
@@ -158,7 +174,7 @@
 
     Il factory reset andrà provato soltanto con autorizzazione esplicita, perché cancella i dati correnti.
 
-11. **Integrazione nella prossima release firmware**
+12. **Integrazione nella prossima release firmware**
 
     Durante lo sviluppo continueremo a installare l’APK in `/data/app`, evitando flash ripetuti. Alla fine dovremo:
     - rendere l’APK sufficientemente compatto oppure riprogettare lo spazio di `product`;
@@ -168,4 +184,15 @@
     - creare il manifest di flash e rollback;
     - flashare e ripetere il collaudo con la copia realmente integrata nel firmware.
 
-Non considero mancanti per la v1 Home Assistant, sincronizzazione Google del Calendario, OTA, store applicazioni e installer APK grafico: il [PRD attuale](../PROJECT/PRD.md) li mantiene fuori dalle funzionalità di base. Home, App Drawer, Calendario locale, Data/Ora, Informazioni, firmware HOME 015 e accesso ADB root sono invece già realizzati e fisicamente verificati.
+13. **OTA launcher firmato — IMPLEMENTATO E VALIDATO FISICAMENTE**
+
+    Il launcher 0.17.3 include manifest RSA firmato, validazione completa APK,
+    download atomico, journal persistente, processo updater separato, backup,
+    health check e rollback automatico. Il percorso reale 0.17.2 → 0.17.3 ha
+    superato download da GitHub, firma/hash/package/certificato, installazione
+    root, watchdog, HOME, riavvio e persistenza senza flash. Audit, piano e
+    risultato sono in `OTA_AUDIT_017.md`,
+    `../EXECUTION/OTA_PHYSICAL_TEST_PLAN_017.md` e
+    `OTA_LIVE_TEST_0173.md`.
+
+Non considero mancanti per la v1 Home Assistant, sincronizzazione Google del Calendario, store applicazioni e installer APK grafico. Home, App Drawer, Calendario locale, Data/Ora, Informazioni, firmware HOME 015 e accesso ADB root sono invece già realizzati e fisicamente verificati.

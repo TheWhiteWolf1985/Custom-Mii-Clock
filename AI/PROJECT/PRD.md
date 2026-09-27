@@ -402,7 +402,8 @@ La prima versione dovrà concentrarsi sulle fondamenta del sistema.
 - dimming/modalità notte;
 - configurazione JSON locale;
 - recovery/fallback;
-- diagnostica minima.
+- diagnostica minima;
+- aggiornamento OTA firmato e fail-safe del solo launcher.
 
 ## Escluso dalla v1
 
@@ -410,7 +411,6 @@ La prima versione dovrà concentrarsi sulle fondamenta del sistema.
 - dashboard HA definitiva;
 - gestione avanzata WebView;
 - installer APK grafico;
-- aggiornamento OTA del custom launcher;
 - store applicazioni;
 - sincronizzazione cloud;
 - account aggiuntivi;

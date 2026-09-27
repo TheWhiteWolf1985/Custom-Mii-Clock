@@ -1,5 +1,20 @@
 # DECISIONS
 
+## ADR 011 — OTA firmato e fail-safe del solo launcher
+
+- Date: 2026-09-27
+- Context: lo sviluppo del launcher procede tramite aggiornamenti `/data/app`;
+  i flash ripetuti non sono necessari e GitHub deve essere solo transport.
+- Decision: usare GitHub Releases di `TheWhiteWolf1985/Custom-Mii-Clock` con
+  manifest schema 1 firmato RSA-3072/SHA-256 e seconda verifica della firma
+  Android ufficiale. Check automatico al massimo giornaliero; download e
+  installazione restano esplicitamente manuali. La transazione usa un worker
+  separato, journal atomico, rollback verificato e guard temporaneo Magisk.
+- Consequences: la privata OTA resta nel vault LUKS; il Clock contiene soltanto
+  la pubblica. Il percorso normale non ammette downgrade. Nessuna partizione è
+  modificata e `/product` resta il fallback estremo. Ogni nuova release deve
+  pubblicare esattamente APK, manifest e firma detached canonici.
+
 ## ADR 001 — Conservare la stock e modificarla offline
 
 - Date: 2026-09-09 (decisione riportata dal passaggio di consegne)
