@@ -1,0 +1,112 @@
+# Contesto attivo
+
+- Fase: release v0.1.2 `x04g-magisk-visible-launcher-014` flashata e verificata fisicamente; la release 013 e congelata come fallita.
+- Confermato: `super` stock repackata byte-identica; gate ADB e fastboot read-only superati su Xubuntu con USB diretto.
+- Confermato: toolchain Xubuntu congelata e testata (`MTKClient v2.1.4.1`, `avbtool 1.2.0` compatibile con il vbmeta AVB 1.0 stock).
+- Confermato: `sudo` non interattivo, sorgenti e dipendenze offline versionabili, redattore report e validatore fail-closed con test automatici.
+- Stato dispositivo all'ultima evidenza disponibile: firmware 014 avviato e verificato con due boot, USB/ADB immediato, shell root, Magisk attivo e launcher visibile. Prima di qualunque futura scrittura serve comunque una nuova verifica live.
+- Confermato: vault LUKS2 file-backed da 16 GiB creato sul disco VM esistente per decisione esplicita; ciclo apertura/mount/chiusura superato e vault lasciato chiuso.
+- Preflight BROM 001: STOP controllato; `fastboot reboot` ha avviato Android, ADB e `boot_completed=1` verificati, zero scritture.
+- Preflight BROM 002: abortito su richiesta prima del cold power-cycle per riavviare la VM; nessun contatto MTK e zero scritture.
+- Webcam USB verificata: acquisizione leggibile 640x480 della schermata del clock tramite `sudo fswebcam`.
+- Preflight BROM 003: STOP per timeout dopo un cold power-cycle senza pulsanti; Android/ADB e schermata verificati dopo il test, zero scritture.
+- Preflight diagnostico BROM 004: STOP senza BROM; anche con MTKClient root il kernel VM ha visto il clock disconnettersi e tornare direttamente come `0e8d:201c X04G`, poi ADB/boot e schermata sono stati verificati.
+- Classificazione USB: il clock usa la porta VM `9-1`; i timeout `-110` sulla `9-2` appartengono alla webcam Microsoft LifeCam e non al clock.
+- Ingresso BROM riuscito dalla console utente: accensione con `VOL+` premuto; DA stage 1/2, DRAM e lettura GPT completati, zero scritture persistenti.
+- GPT fisica: user flash `0xec000000` (3959422976 byte), `super` `0x60000000`, coerenti con il manifest di backup.
+- Backup fisico 002: STOP prima della lettura; un nuovo processo MTKClient non può riutilizzare il Download Agent lasciato da `printgpt`, output full-flash assente e zero scritture.
+- Backup fisico 003: BROM e DA caricati, ma lettura interrotta a zero byte per `USBError(16, Resource busy)` dopo il fallimento delle estensioni DA; zero scritture.
+- Diagnosi host: `ModemManager` era attivo ed è stato arrestato e disabilitato; il file vuoto è preservato nel vault come evidenza.
+- Full-flash backup 004: PASS, 3959422976 byte, SHA-256 `3ef48d705a9ea90e98ac1ad94896074d07aabd6e58e87843b24e50f50412e484`; GPT primaria/secondaria valida e zero scritture.
+- Deviazione audit 004: il manifest era preparato e validato ma non ancora committato/pushato quando l'utente ha lanciato manualmente l'esatto comando read-only; registrata senza occultarla.
+- Checkpoint full-flash: vault sincronizzato e chiuso; l'utente ha autorizzato di continuare fino alla nuova soglia del 5% residuo.
+- Operazione allora successiva, ora completata: acquisire boot1, boot2 e preloader, quindi derivare e confrontare le partizioni dal full-flash.
+- Boot regions 005: boot1 e boot2 PASS da 2097152 byte ciascuna; il DA e stato riutilizzato senza riavvii. `r preloader` si e fermato correttamente perche non esiste una partizione GPT con quel nome.
+- Preloader backup 006: PASS, 169132 byte, SHA-256 `84f621317857a28f5566919c3e0770004ecba4f1583a12477b129a2fee3aa530`; intestazione MediaTek `FILE_INFO` e marker X04G/MT8167 riconosciuti, zero scritture.
+- Copertura backup fisico: full user flash, eMMC boot1, eMMC boot2 e preloader acquisiti dal device e verificati con SHA-256 nel vault LUKS.
+- Derivazione offline 007: entrambe le GPT e le rispettive CRC validate; estratte nel vault 12 partizioni tecniche con doppia verifica SHA-256, senza mount e senza duplicare partizioni personali.
+- Confronto community: preloader, lk/lk2, recovery, logo, dtbo, tee1/tee2, vbmeta, vbmeta_system, vbmeta_vendor e super sono byte-identici. Il solo boot tecnico differisce.
+- Boot fisico classificato: ramdisk modificato dallo script storico ADB/root, come confermato dall'utente; presenti overlay Magisk e rootshell, mentre il descriptor AVB stock incorporato non verifica il contenuto modificato.
+- Policy boot: la copia fisica resta il rollback dello stato attuale funzionante; il boot community pulito, coerente con tutti gli altri componenti e verificato da avbtool, e soltanto la base stock candidata per la ricostruzione e firma di progetto.
+- Super/AVB 008: product, system e vendor estratte dalla super fisica sono byte-identiche alle copie versionate e superano `e2fsck -fn`.
+- Catena AVB stock 008: boot pulito, recovery, dtbo, vbmeta root, vbmeta_system, vbmeta_vendor e le tre partizioni logiche superano la verifica completa offline con `--follow_chain_partitions`.
+- FEC 008: tool AOSP Android 10 compilato da sorgenti congelati e versionati; il roundtrip con roots=2 ricrea dati, hashtree e FEC byte-identici allo stock. L'unico byte diverso per immagine e la release string avbtool 1.1.0 -> 1.2.0.
+- Spazio vault: 8299634688 byte liberi misurati; il vecchio minimo fisso di 9 GiB impediva la riapertura dopo il backup. Il wrapper ora richiede 2 GiB e ogni gate controlla separatamente la capienza dei propri output.
+- Checkpoint 008: commit `bc5b5ce` pushato su `origin/main`.
+- Chiave AVB 009: RSA 2048 v1 generata nel vault, mode 0600 root-only; nel repository entrano soltanto PEM pubblico, formato AVB pubblico, fingerprint e policy. Vault chiuso al termine.
+- Checkpoint 009: commit `c9f66d7` pushato su `origin/main`.
+- Catena AVB progetto 010: doppia build byte-identica; boot/recovery mantengono i payload stock, dtbo e super restano byte-identiche, vbmeta root/system/vendor sono firmate v1. Verifica completa con chiave pubblica attesa e `--follow_chain_partitions`: PASS.
+- Checkpoint 010: commit `791babb` pushato su `origin/main`.
+- Logo sentinella 011: la `logo` fisica da 8388608 byte contiene tre record MediaTek (`logo`, `cert1`, `cert2`) terminati a `0x00060b10`, seguiti da 7992560 byte di padding nullo.
+- Candidato 011: cambia soltanto l'ultimo byte della partizione, offset `0x007fffff`, da `0x00` a `0xa5`; SHA-256 sentinella `7e790f5e5e6e2733e5bed35908b4fa0dcad8f88ef7b3a1e13ebe03c860c5a6aa`.
+- Rollback 011: copia fisica originale, SHA-256 `82ecd4ac0ca574f00b99494fdb782e5e047e273eb9930f6a9a007fe5214aca6d`; identica alla copia versionata di riferimento ma mantenuta esplicitamente come origine fisica.
+- Controlli 011: 18 test offline PASS; manifest sentinella e restore validati con hash; dopo ogni flash l'hash della partizione sara letto via ADB root e lo stato visivo verificato con webcam.
+- Checkpoint operativo 011: commit `3663df6` e correzione webcam `a38aa6b` pushati su `origin/main`; entrambi i manifest PASS con `--verify-artifacts --require-pushed`.
+- VM Git: chiave host del server verificata contro Windows e registrata; la VM non possiede credenziali Forgejo e non riceve chiavi private.
+- Staging VM 011: `/home/codex/miiclock-gate-011-a38aa6b`, estratto dal commit operativo `a38aa6b`; archivio di trasferimento SHA-256 `c7ac21064a2b3279ce6704b9a21547788866bc4543eee7c20d50f2d21612e504` verificato sui due host.
+- Preflight VM 011: 18 test PASS, due manifest e tre artefatti hashati PASS, comando webcam `sudo` verificato, frame stock `Configurazione` leggibile, circa 35 GB liberi.
+- Stato finale offline 011: vault smontato e mapper chiuso; Android ADB `device`, `sys.boot_completed=1`, provisioning invariato; zero scritture sul Clock.
+- Gate 3 fisico 011: `logo` sentinella flashata con fastboot OKAY e verificata on-device tramite SHA-256; Android ha completato il boot con provisioning invariato.
+- Restore 011: `logo` originale fisica flashata con fastboot OKAY e verificata on-device tramite SHA-256; secondo boot completo, provisioning invariato e schermata stock `Configurazione` normale via webcam.
+- Scritture totali Gate 3: due, entrambe e soltanto sulla partizione `logo`; nessun erase, wipe, bypass AVB o accesso a userdata.
+- Deviazione tool: il primo wrapper fastboot poteva restare bloccato su `getvar` senza device; rilevato prima della scrittura, corretto con timeout, testato e pushato nel commit `8f42c4c`.
+- Deviazione webcam: un frame restore adattato a 1280x720 era incompleto con area verde; retry nativo 640x480 con frame iniziali scartati ha mostrato la schermata stock normale.
+- Chiarimento requisito: la sentinella padding era volutamente invisibile e ha provato solo flash/rollback; l'utente richiede che il prossimo candidato firmware abbia un effetto realmente visibile sul display.
+- Operazione successiva: rileggere il PRD, selezionare la modifica visibile minima, costruire e validare offline candidato e rollback prima di una nuova autorizzazione fisica.
+- Quota: Gate 3 iniziato al 40% residuo e completato sopra la soglia di stop del 5%; ricontrollo obbligatorio prima del prossimo gate.
+- Candidato visibile scelto: launcher non-HOME avviabile manualmente, con Clock, swipe verso App Drawer, apertura Settings e ritorno alla UI stock; non interferisce col provisioning.
+- Launcher 0.1.0-debug: doppia build dopo clean, seconda completamente offline e byte-identica; APK 2443508 byte, SHA-256 `65b964ddd98c0bfaec71025ffc3d7f1fe55ca8fd2b128bdc353a9ae782074cfa`.
+- APK debug: package `local.miiclock.launcher.debug`, min/target SDK 29, firma v2 valida; e solo prova di compilazione e non deve entrare nel firmware.
+- Checkpoint storico completato: chiave firma launcher persistente creata nel vault, release non-debug prodotta e toolchain congelata prima della modifica di `product`.
+- Candidato visibile 012: tutte le sei scritture fastboot hanno restituito `OKAY`, inclusa `super` sparse e `vbmeta` root per ultima; Android si e avviato e nessun erase/wipe e stato eseguito.
+- Esito runtime 012: STOP per ADB `unauthorized`; il boot pulito firmato dal progetto ha sostituito il precedente boot fisico modificato da Magisk/script storico che forniva ADB aperto/root. Il manifest rollback fisico 012 e pronto.
+- Requisito cliente aggiornato: ogni host USB deve collegarsi subito senza autorizzazione RSA e `adb shell` deve essere `uid=0(root)`. Il rischio di controllo root da qualunque host fisicamente collegato e stato accettato esplicitamente.
+- Policy 013: niente Magisk, rootshell, netcat, ADB TCP o `setenforce`; SELinux deve restare `Enforcing` e AVB attiva con flags zero.
+- Candidato v0.1.1 013: modifica solo `product` per il launcher e `system` per `prop.default` piu `miiclock-adb.rc`; metadata LP e byte fuori dalle due extent restano invariati.
+- Offline 013: validazione completa `PASS`, incluso ext4/FEC, roundtrip sparse, diff limitato, policy open-root ADB e catena AVB v1; zero scritture sul Clock per questo candidato.
+- Checkpoint 013: commit `e02491e` pushato su `origin/main` e verificato identico; manifest candidato `PASS` con `--require-pushed`, 6/6 artefatti.
+- Replica Xubuntu 013: `SHA256SUMS` 12/12, manifest 6/6 e validatore approfondito `OPEN_ROOT_ADB_CANDIDATE_OFFLINE_OK`; rollback fisico 012 riletto dal vault `PASS` 6/6.
+- Quota corrente al controllo 2026-09-13: 50% residuo nella finestra di 5 ore e 20% settimanale; tre reset disponibili ma non ancora riscattabili perche nessuna finestra e al 10% residuo o meno.
+- Ingresso fastboot corretto: dalla recovery selezionare esplicitamente `Reboot to bootloader`; la sola enumerazione fastboot ottenuta in altro modo puo non rispondere ai comandi USB bulk.
+- Preflight fisico 013: `getvar all` PASS in 0,060 s, tre probe prodotto consecutivi PASS, dimensioni e stato bootloader conformi, webcam mostra `FASTBOOT mode`.
+- Vault ripulito della sola copia di build derivata gia versionata; backup e chiave preservati. Mount standard READY con 4381806592 byte liberi.
+- Manifest firmware nuovo e rollback fisico entrambi PASS 6/6; validatore completo candidato PASS; zero scritture nel preflight.
+- Quota aggiornata dopo il reset autorizzato: 97% residuo cinque ore e 100% settimanale; due crediti restanti. Gate quota verde.
+- Esito fisico 013: Android avviato, ma funzione USB Android/ADB assente; release dichiarata fallita e vietata come base. Nessun artefatto `system`, `super` o `vbmeta_system` 013 e ammesso nella 014.
+- Baseline 014: boot fisico Magisk gia funzionante, 16777216 byte e SHA-256 `112b8952c6a2ae833e468fd40bff654210f588192a0c589ef1f017fcc8d6a756`, rifirmato con AVB progetto senza modificare kernel/ramdisk; `super`, `product`, `vbmeta_system` e `vbmeta` esatti della 012.
+- Policy 014: Magisk permanente, SELinux `Permissive` accettato, ADB USB immediato/root, ADB TCP disabilitato, AVB attiva con flags zero. Il launcher 0.1.0 resta non-HOME e viene avviato manualmente dopo il provisioning.
+- Pipeline 014: builder fail-closed, doppia build deterministica, inventario Magisk, confronto byte per byte del payload, validatore completo 012/AVB e generatore manifest a sole quattro partizioni sono implementati e coperti da test; la firma reale deve essere eseguita localmente nella VM con vault montato.
+- Build reale 014 completata nella VM il 2026-09-14: due output byte-identici, boot finale 16777216 byte e SHA-256 `080584f845456a9db3d473430f28ce105aacde16d17e162f764b934532ba9a6b`; zero scritture sul Clock.
+- Immutabilita 014: kernel SHA-256 `9fd56de2d11c4d69f0750432a304a16d8782e45670df13b1c04b9426033111f5`, ramdisk compresso SHA-256 `fe94e696ad87d6f7bbbef998f4c8877bc007b6a40738807558d954c8a6f26258`; prima differenza a offset 8441994, oltre il payload protetto terminato a 8439808.
+- Gate offline 014: marker `.backup`, `overlay.d`, `init.adb.rc`, `magisk32.xz`, `rootshell.sh`, `stub.xz` presenti; super/product/system 012 esatti, hash 013 esclusi, AVB completa PASS, manifest PASS con 4/4 artefatti e sole quattro scritture autorizzate.
+- Preflight fisico 014 del 2026-09-14: transizione Preloader `0e8d:2000` -> fastboot `0e8d:201c` osservata; cinque enumerazioni fastboot stabili, tre `getvar product` consecutivi `mico_x04g`, dimensioni boot/vbmeta_system/super/vbmeta corrette, `unlocked: yes`, `secure: no`, webcam in Fastboot. Zero scritture.
+- Rollback fisico riletto dal vault PASS 6/6; copia finale candidata rivalidata nella VM con chain AVB completa PASS.
+- Flash fisico 014 del 2026-09-14: `boot`, `vbmeta_system`, `super` sparse e `vbmeta` root scritte in quest'ordine; ogni comando fastboot ha restituito `OKAY`, `vbmeta` e rimasta ultima, nessun'altra partizione e stata toccata e non sono stati eseguiti erase, format o wipe.
+- Primo boot 014: PASS con ADB USB immediato da chiave host prima non autorizzata, shell `uid=0(root)`, `magiskd` attivo, controller `musb-hdrc`, SELinux `Permissive`, AVB `orange` con verity `enforcing` e nessun listener TCP 5555.
+- UI 014: launcher avviato come activity non-HOME e verificato via webcam; titolo, orologio, data, `firmware gate visibile`, pagina Applicazioni, apertura Settings e ritorno alla UI stock tutti PASS.
+- Secondo boot 014: Android completato in circa 69 secondi; USB, ADB root, Magisk, AVB e assenza di ADB TCP riconfermati. Il launcher e stato rilanciato con esito `Status: ok` ed e nuovamente visibile via webcam.
+- Evidenze fisiche 014: `Nuovo firmware/Fase 1 - Modifica firmware/reports/device-gate/magisk-visible-launcher/20260914-014/`; tutti i file elencati in `99-SHA256SUMS.txt` verificano correttamente.
+- Stato finale gate 014: vault smontato, mapper LUKS chiuso, archivio temporaneo di trasferimento rimosso; Clock ancora `device` con boot completato e launcher in primo piano.
+- Consolidamento 014 del 2026-09-14: candidato reso autonomo copiando al suo interno APK, product, super sparse, recovery, dtbo e vbmeta richiesti; nessuna dipendenza binaria dalle release 012/013 rimane.
+- Pulizia vault: rimossi esclusivamente analysis e candidate intermedi 010-014-staging/build; preservati integralmente backup (6609696714 byte), chiavi (4509 byte) e baseline 014 (1323501246 byte). Spazio logico recuperato: 4985381963 byte. Rollback 6/6 e validatore 014 nuovamente PASS dopo la rimozione; vault chiuso.
+- Pulizia repository: rimossi candidate 011/012/013, copie stock estratte, output intermedi, manifest/report specifici superati e tool one-shot; il know-how resta in `AI/EXECUTION/CLEANUP_BASELINE_014.md` e nei documenti di progetto.
+- Struttura Git baseline: `main`, `Base_version` e `develop` pubblicati sullo stesso root commit pulito; tag annotato `v0.1.2-working-base` pubblicato sulla medesima baseline.
+- Launcher v0.2.0: feature branch `codex/home-screen-v0.2.0` da `develop`; `main`, `Base_version`, `develop` e firmware 014 invariati.
+- APK 0.2.0: doppia build offline e doppia firma byte-identiche, SHA-256 `85473f7f32c1698f47008fcbf7cf7d2fd916e51ef18634c00753e4dc4be76610`, firma v2 con certificato persistente.
+- Installazione 0.2.0: aggiornamento della system app via ADB, versionCode 2 attivo da `/data/app`; nessun fastboot o intervento su partizioni.
+- Accettazione tecnica 0.2.0: Home, carosello, gesture, placeholder, dock, fallback app assenti, JSON atomico, timeout e secondo boot PASS; ADB root e SELinux `Permissive` preservati.
+- Accettazione estetica 0.2.0: in attesa dell'utente; non unire il feature branch in `develop` prima del benestare fotografico.
+- Launcher 0.7.4/code 14: Home invariata; Data e Ora e Informazioni sono liste verticali in stile Settings Android senza ricerca. APK firmato SHA-256 `28d746ebd4f819b612dc117d202ad4655fc764109dc4908d20a1f97645ce7292` installato in `/data/app` sul ramo `codex/home-settings-v0.7.0`.
+- Data/Ora 0.7.4: esattamente quattro tile per data, ora, fuso e automatico. Picker reali; toggle verificato `1→0→1`; fuso verificato `Europe/Rome→Europe/Samara→Europe/Rome` tramite policy Magisk limitata all'UID del package.
+- Informazioni 0.7.4: dieci tile verticali scorrevoli; X04G, Android 10/API 29, firmware 0.1.2 (014), root firmware, root launcher, ADB e USB letti a runtime.
+- Gate fisico 0.7.4: doppia build/firma riproducibile, screenshot/webcam, editor, valori runtime, riavvio, hash installato e persistenza policy tutti PASS; nessun flash o intervento su partizioni.
+- Stato finale 0.7.4: Clock avviato, launcher su Home, ADB root, `auto_time=1`, `Europe/Rome`, policy launcher `ALLOWED`, vault chiuso. Accettazione utente ricevuta e ramo integrato in `develop` con merge commit `8bc1427`; `main` e `Base_version` invariati.
+- La candidate 0.7.3 è fallita soltanto per sovrapposizione della capsula stock sulla prima tile; è stata corretta nella 0.7.4 e non deve essere riutilizzata.
+- Baseline corrente 015: firmware v0.1.3 con Launcher 0.11.4 integrato in
+  `product` e impostato come HOME; gate fisico 2026-09-25 PASS con due boot e
+  stabilita 30/30. Il Clock resta su 015 e il rollback 014 non e stato eseguito.
+- Runtime 015: ADB USB root, Magisk, `musb-hdrc`, SELinux `Permissive`, AVB
+  `orange`, ADB TCP disabilitato; marker `MIICLOCK_FIRMWARE_VERSION=0.1.3 (015)`.
+- Ingresso bootloader remoto provato: `adb reboot recovery`, attendere ADB in
+  recovery, quindi `adb shell reboot bootloader`; validare sempre tre
+  `fastboot getvar product` prima di qualsiasi scrittura.

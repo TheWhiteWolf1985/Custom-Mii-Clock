@@ -1,0 +1,190 @@
+meta:
+  project: "MiiClock — Xiaomi Mi Smart Clock X04G"
+  ai_kit_version: "1.0.0"
+  updated_at: "2026-09-12"
+  source: "xiaomi-mi-smart-clock-x04g-passaggio-consegne.md"
+commands:
+  inventory_stock: "find /home /root -type f \\( -name super_stock_repacked.img -o -name super.img -o -name new-boot-fixed.img -o -name boot.img -o -name Fully-Kiosk-Browser.apk \\) 2>/dev/null"
+  foreground: "adb shell dumpsys window | grep -E 'mCurrentFocus|mFocusedApp'"
+entities:
+  - id: x04g
+    type: device
+    name: "Xiaomi Mi Smart Clock X04G"
+    notes: "Android 10 stock avviabile; ADB shell root confermata."
+  - id: stock_super
+    type: firmware_image
+    name: "super stock"
+    notes: "Asset citato; presenza e hash da verificare su Xubuntu."
+  - id: x04g_stock_dump_2023
+    type: firmware_archive
+    name: "dump_mico_x04g.tar.xz"
+    path: "Firmware stock/dump_mico_x04g.tar.xz"
+    notes: "Dump community X04G senza userdata, scaricato da Internet Archive il 2026-09-09; SHA-256 9ffd2a4b1b66d7f1ae0496b5e7e2f4db3e1d14cad74d03802f1df30d64dde214."
+  - id: stock_boot
+    type: firmware_image
+    name: "new-boot-fixed.img"
+    notes: "Usato storicamente per recovery; presenza e hash da verificare."
+  - id: fully
+    type: android_app
+    name: "Fully Kiosk Browser"
+    notes: "Package de.ozerov.fully; la FullyActivity apre manualmente la dashboard HA."
+  - id: google_launcher
+    type: android_package
+    name: "com.google.assistant.launcher"
+    notes: "AssistantLauncherActivity torna in foreground dopo reboot."
+  - id: system_launcher_shim
+    type: android_component
+    name: "com.google.assistant.core/.launcher.SystemLauncherShim"
+    notes: "Package protetto; emerso in foreground disabilitando il launcher."
+  - id: phase0_stock_analysis_2026_09_10
+    type: reverse_engineering_evidence
+    name: "Fase 0 stock dump analysis"
+    path: "Nuovo firmware/Fase 0 - Reverse engineering/reports/PHASE_0_REPORT.md"
+    notes: "GPT CRC valido; Android 10/API 29, MT8167 ARM32, dynamic partitions product/vendor/system; boot v2 e catena AVB 1.0 firmata. HOME risolta da intent Provision/Assistant; recovery community MTKClient/fastboot disponibile solo come riferimento non validato. Evidenza offline, nessun flash/test fisico."
+  - id: x04g_tools_reference_acec16d
+    type: source_reference
+    name: "x04g_tools community reference"
+    path: "Nuovo firmware/Fase 0 - Reverse engineering/tools/x04g_tools_acec16d.tar.gz"
+    notes: "Archivio del commit acec16d5bb252ab5f13fa42f1f91a16b8849d38f di octathorp/x04g_tools; SHA-256 80ddc4cbe68c1308d76c2705c26b895218cf3c6ff6346bd8682af2f15bd09793. Consultazione, non istruzioni di flash approvate."
+  - id: wsl_toolchain_2026_09_10
+    type: development_environment
+    name: "WSL firmware toolchain"
+    notes: "WSL 2 con Ubuntu 26.04.1 LTS (distro Ubuntu, utente codex). Verificati simg2img, e2fsprogs, Git, Python 3.14.4, adb e fastboot. usbipd-win 5.3.0 e il pass-through verso WSL sono installati per l'X04G; la sola enumerazione fastboot riesce, ma i comandi getvar non ricevono risposta. lpunpack/lpmake non sono pacchetti Ubuntu; il gate iniziale usa un repack layout-preserving dal super stock. avbtool rimane necessario prima della prima firma AVB modificata."
+  - id: phase1_gate1_roundtrip_2026_09_10
+    type: verification_evidence
+    name: "Super layout-preserving round-trip"
+    path: "Nuovo firmware/Fase 1 - Modifica firmware/reports/gate_1_roundtrip.json"
+    notes: "Superato: super stock e super.repacked.bin byte-identici, 1610612736 byte, SHA-256 271127b4d3a901b0a3c8ad6f08de6c915a39a0da7ad4f5d4ddf05548f8f3aca7. Sostituite e validate le extent lineari product/vendor/system senza alterare metadata LP o stock."
+  - id: phase1_gate2_device_readiness
+    type: verification_gate
+    name: "Physical bootloader and recovery readiness"
+    path: "Nuovo firmware/Fase 1 - Modifica firmware/tools/collect_device_gate.ps1"
+    notes: "ADB verificato il 2026-09-12: X04G/mico_x04g, Android 10, dynamic partitions attive; stato AVB orange, flash.locked=0, vbmeta.device_state=unlocked, SELinux Permissive. Fastboot verificato il 2026-09-12 con USB diretto su Xubuntu: getvar risponde, unlocked=yes, secure=no e slot-count=0. I report redigono identificativi. Rimane da validare separatamente la procedura di recovery. Lo script non esegue reboot, unlock, erase o flash."
+  - id: phase1_gate2_adb_2026_09_12
+    type: verification_evidence
+    name: "Physical ADB readiness capture"
+    path: "Nuovo firmware/Fase 1 - Modifica firmware/reports/device-gate/20260912-113526-adb.txt"
+    notes: "Raccolta read-only riuscita: device X04G/mico_x04g con Android 10; /dev/block/by-name conferma boot, recovery, super, vbmeta, vbmeta_system e vbmeta_vendor. Gli identificativi hardware sono redatti nel report."
+  - id: phase1_gate2_fastboot_2026_09_12
+    type: verification_evidence
+    name: "Physical fastboot readiness capture via Xubuntu"
+    path: "Nuovo firmware/Fase 1 - Modifica firmware/reports/device-gate/20260912-132829-fastboot-xubuntu.txt"
+    notes: "Raccolta read-only riuscita via USB diretto Xubuntu: product mico_x04g, bootloader unlocked=yes, secure=no, slot-count=0; super e le tre partizioni vbmeta sono esposte. current-slot non e supportato dal bootloader."
+  - id: stock_provision
+    type: android_package
+    name: "com.android.provision"
+    notes: "Dichiara MAIN+HOME+SETUP_WIZARD; deve rimanere il percorso pre-provisioning."
+  - id: stock_assistant_launcher
+    type: android_package
+    name: "com.google.assistant.launcher"
+    notes: "APK product; AssistantLauncherActivity dichiara IOT_LAUNCHER. Separato dal core Assistant che dichiara SystemLauncherShim HOME/IOT_LAUNCHER."
+relations:
+  - from: x04g
+    type: boots
+    to: stock_super
+  - from: x04g_stock_dump_2023
+    type: provides_stock_artifacts_for
+    to: x04g
+  - from: x04g
+    type: uses_boot
+    to: stock_boot
+  - from: fully
+    type: is_covered_by_at_boot
+    to: google_launcher
+  - from: google_launcher
+    type: falls_back_to
+    to: system_launcher_shim
+  - from: stock_provision
+    type: precedes_home_selection
+    to: stock_assistant_launcher
+  - from: phase0_stock_analysis_2026_09_10
+    type: establishes_gate_for
+    to: stock_super
+  - from: phase1_gate1_roundtrip_2026_09_10
+    type: verifies_reconstruction_of
+    to: stock_super
+  - from: phase1_gate1_roundtrip_2026_09_10
+    type: must_precede
+    to: phase1_gate2_device_readiness
+changes_log:
+  - step_id: phase1_gate2_fastboot_capture_2026_09_12
+    summary: "Verificato fastboot nativo Xubuntu e acquisito il report read-only del bootloader."
+    files:
+      - "Nuovo firmware/Fase 1 - Modifica firmware/reports/device-gate/20260912-132829-fastboot-xubuntu.txt"
+      - "AI/PROJECT/RUNBOOK.md"
+    notes: "Il bootloader risponde con unlocked=yes e secure=no; nessun identificativo hardware nel report e nessuna operazione di scrittura eseguita."
+    risks:
+      - "Il gate recovery resta da validare prima del primo flash di un'immagine modificata."
+  - step_id: phase1_fastboot_transport_diagnostic_2026_09_12
+    summary: "Configurati driver WinUSB, usbipd-win e fastboot WSL; verificata enumerazione ma non risposta getvar."
+    files:
+      - "AI/KNOWLEDGE/KNOWLEDGE.yaml"
+      - "Nuovo firmware/Fase 1 - Modifica firmware/README.md"
+    notes: "Il bus USB del clock viene visto in fastboot da Windows e Linux, ma le interrogazioni standard del bootloader vanno in timeout via VM/USB-IP. Nessun comando di scrittura, unlock, erase o flash eseguito."
+    risks:
+      - "Per completare il gate fastboot usare un trasporto USB diretto e affidabile, preferibilmente Linux reale o controller USB passato integralmente alla VM."
+  - step_id: phase1_gate2_adb_capture_2026_09_12
+    summary: "Acquisito e verificato il report ADB read-only del device fisico X04G."
+    files:
+      - "Nuovo firmware/Fase 1 - Modifica firmware/reports/device-gate/20260912-113526-adb.txt"
+      - "Nuovo firmware/Fase 1 - Modifica firmware/README.md"
+    notes: "Nessun identificativo hardware nel report; bootloader rilevato sbloccato e AVB orange. Nessun reboot, unlock, erase o flash eseguito."
+    risks:
+      - "Il gate resta incompleto finche non viene raccolto e revisionato il report fastboot e verificata la recovery."
+  - step_id: phase1_gate2_collection_prepared_2026_09_10
+    summary: "Preparata raccolta read-only per verificare ADB, fastboot, bootloader e recovery sul device fisico."
+    files:
+      - "Nuovo firmware/Fase 1 - Modifica firmware/tools/collect_device_gate.ps1"
+    notes: "Nessun device rilevato al momento della preparazione; nessuna operazione sul firmware o dispositivo eseguita."
+    risks:
+      - "Non procedere a flash, unlock o erase prima dell'acquisizione e revisione dei report ADB e fastboot."
+  - step_id: phase1_gate1_roundtrip_2026_09_10
+    summary: "Superato il repack invariato di super con confronto byte-per-byte e SHA-256."
+    files:
+      - "Nuovo firmware/Fase 1 - Modifica firmware/tools/repack_super_layout_preserving.py"
+      - "Nuovo firmware/Fase 1 - Modifica firmware/artifacts/super.repacked.bin"
+      - "Nuovo firmware/Fase 1 - Modifica firmware/reports/gate_1_roundtrip.json"
+    notes: "Nessun firmware stock modificato e nessun flash eseguito."
+    risks:
+      - "Il prossimo gate richiede verifica fisica di bootloader/fastboot e recovery prima di qualsiasi immagine modificata."
+  - step_id: wsl_toolchain_bootstrap_2026_09_10
+    summary: "Configurata e verificata la toolchain WSL minima per il gate di repack invariato della Fase 1."
+    files:
+      - "Nuovo firmware/Fase 1 - Modifica firmware/README.md"
+    notes: "Ubuntu 26.04.1 LTS; simg2img/e2fsprogs/Git/Python disponibili."
+    risks:
+      - "La firma di una immagine modificata richiedera avbtool e una gestione separata delle chiavi."
+  - step_id: phase0_reverse_engineering_2026_09_10
+    summary: "Completata analisi read-only del dump stock: estrazione verificata, GPT, super/LP, ext4, manifest APK, boot/recovery e AVB. Preparato gate di identita per Fase 1."
+    files:
+      - "Nuovo firmware/Fase 0 - Reverse engineering/reports/PHASE_0_REPORT.md"
+      - "Nuovo firmware/Fase 0 - Reverse engineering/reports/gpt_layout.json"
+      - "Nuovo firmware/Fase 0 - Reverse engineering/reports/super_layout.json"
+      - "Nuovo firmware/Fase 0 - Reverse engineering/reports/boot_avb.json"
+    notes: "Il nuovo launcher deve essere post-provisioning; le firme AVB stock non sono disponibili."
+    risks:
+      - "Non flashare senza repack invariato di super e restore fisico validato."
+      - "Bootloader unlock e acceptance della nuova catena AVB sono ancora da provare sul device."
+  - step_id: download_x04g_stock_dump_2026_09_09
+    summary: "Scaricato e registrato il dump firmware X04G pubblico; calcolato SHA-256 e aperto il contenitore XZ/TAR senza estrarre contenuti."
+    files:
+      - "Firmware stock/dump_mico_x04g.tar.xz"
+      - "FIRMWARE_ARTIFACTS.md"
+    commands:
+      - "curl.exe --fail --location https://archive.org/download/dump_mico_x04g/dump_mico_x04g.tar.xz"
+      - "Get-FileHash -Algorithm SHA256"
+      - "python tarfile.open(..., 'r:xz')"
+    notes: "Fonte community non ufficiale; il provider dichiara dump ottenuto con mtkclient e userdata rimossa."
+    risks:
+      - "Confrontare le partizioni con il backup stock già usato sul dispositivo prima di qualsiasi flash."
+  - step_id: bootstrap_knowledge_2026_09_09
+    summary: "Compilata la knowledge base dal passaggio di consegne; registrati stato, decisioni, rischi, comandi noti e attività non verificate."
+    files:
+      - "xiaomi-mi-smart-clock-x04g-passaggio-consegne.md"
+      - "AI/PROJECT/"
+      - "AI/KNOWLEDGE/"
+      - "AI/EXECUTION/"
+    notes: "Nessuna interazione con dispositivo, host Xubuntu o immagini firmware in questa attività."
+    risks:
+      - "Inventario e hash delle immagini stock ancora richiesti."
+      - "Non eseguire flash o wipe prima dell'esecuzione degli step ordinati."
