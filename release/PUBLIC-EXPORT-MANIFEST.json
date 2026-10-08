@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "public_repository": "TheWhiteWolf1985/Custom-Mii-Clock",
+  "release": {
+    "public_name": "MiiClock 1.0.0-RC1",
+    "tag": "v1.0.0-RC1",
+    "device": "Xiaomi Mi Smart Clock X04G",
+    "fastboot_product": "mico_x04g",
+    "firmware_version": "0.1.16",
+    "firmware_build": 28,
+    "launcher_version": "0.25.2",
+    "launcher_version_code": 51,
+    "launcher_package": "local.miiclock.launcher",
+    "ota_firmware_min": 27,
+    "ota_firmware_max": 28,
+    "status": "pre-release"
+  },
+  "source_of_truth": {
+    "git_remote": "Forgejo origin/main",
+    "github_role": "repository pubblico, documentazione e asset Release",
+    "publication": "manuale dopo audit, firma e accettazione"
+  },
+  "licensing": {
+    "source_code_and_scripts": "Apache-2.0",
+    "documentation_and_original_media": "CC-BY-4.0",
+    "third_party_and_derived_firmware": "see NOTICE.md; not relicensed by MiiClock"
+  },
+  "public_roots": [
+    "Documentazione",
+    "keys",
+    "release"
+  ],
+  "required_root_files": [
+    "README.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "INSTALL_X04G.md",
+    "LICENSE",
+    "LICENSE-DOCUMENTATION.md",
+    "NOTICE.md",
+    "RECOVERY_X04G.md",
+    "RELEASE-METADATA.json",
+    "RELEASES.md",
+    "SECURITY.md",
+    "SUPPORT.md",
+    "UPDATE_APK.md",
+    "VERIFY_RELEASE.md"
+  ],
+  "required_release_assets": [
+    "miiclock-launcher-0.25.2.apk",
+    "ota-manifest.json",
+    "ota-manifest.sig",
+    "miiclock-x04g-firmware-1.0.0-RC1.zip",
+    "miiclock-x04g-firmware-1.0.0-RC1-SHA256SUMS.txt",
+    "firmware-manifest.json",
+    "firmware-manifest.sig"
+  ],
+  "forbidden_path_fragments": [
+    "Firmware stock",
+    "candidates",
+    "device-backup",
+    "private",
+    "vault",
+    "userdata",
+    ".keystore",
+    "avb-private",
+    "luks-recovery",
+    "launcher/",
+    "firmware-tools/",
+    ".github/"
+  ],
+  "allowed_public_key_names": [
+    "miiclock-ota-manifest-v1-public.pem",
+    "x04g-project-avb-v1-public.pem"
+  ]
+}

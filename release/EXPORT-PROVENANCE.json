@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "source_commit": "927b96d8434117c73e8bbf5af6ac313fecd726d7",
+  "public_repository": "TheWhiteWolf1985/Custom-Mii-Clock",
+  "release": {
+    "public_name": "MiiClock 1.0.0-RC1",
+    "tag": "v1.0.0-RC1",
+    "device": "Xiaomi Mi Smart Clock X04G",
+    "fastboot_product": "mico_x04g",
+    "firmware_version": "0.1.16",
+    "firmware_build": 28,
+    "launcher_version": "0.25.2",
+    "launcher_version_code": 51,
+    "launcher_package": "local.miiclock.launcher",
+    "ota_firmware_min": 27,
+    "ota_firmware_max": 28,
+    "status": "pre-release"
+  },
+  "network_actions": "none",
+  "generated_artifacts": "documentation, public keys and release metadata only; release binaries are GitHub Release assets"
+}
