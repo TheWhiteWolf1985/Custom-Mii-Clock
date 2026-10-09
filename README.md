@@ -18,8 +18,8 @@ controllo MediaSession e overlay vocale MiiPulse.
   [Supporto](SUPPORT.md).
 
 > **Gate firmware:** il bundle firmware 028 ha superato le verifiche offline,
-> ma non ha ancora completato il collaudo fisico sul dispositivo. Non viene
-> pubblicato come asset finché questo gate non risulta superato.
+> il flash controllato e il collaudo su X04G. La Release pubblica resta una
+> **pre-release** destinata a tester consapevoli, non una garanzia universale.
 
 ## Funzioni principali
 

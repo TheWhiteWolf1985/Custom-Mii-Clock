@@ -21,3 +21,9 @@ termini propri. Questo file non sostituisce le rispettive licenze.
 La licenza MiiClock copre esclusivamente il materiale originale identificato
 sopra. La pubblicazione di un firmware derivato richiede una verifica separata
 del perimetro redistribuibile per ogni release.
+
+La release `1.0.0-RC1` è pubblicata come firmware derivato per ricerca,
+interoperabilità e test esclusivamente su hardware X04G posseduto dal tester.
+È fornita senza garanzie; chi la installa conserva un proprio backup e piano di
+recupero. Questa nota non modifica né sostituisce le licenze dei componenti di
+terzi inclusi nel firmware.

@@ -13,7 +13,7 @@
     "build": 28,
     "label": "028",
     "release_name": "x04g-firmware-028-launcher-0.25.2",
-    "physical_flash_status": "not-published-pending-release-gate"
+    "physical_flash_status": "passed-on-x04g-2026-10-08"
   },
   "launcher": {
     "package": "local.miiclock.launcher",

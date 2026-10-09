@@ -26,10 +26,26 @@ che il protocollo Fastboot sia utilizzabile sullo X04G.
 
 ## Flash
 
-Usare esclusivamente gli script e il manifest allegati alla specifica Release.
-Essi stabiliscono quale profilo sia ammesso e l'ordine delle immagini. Nel
-profilo di aggiornamento da una baseline MiiClock verificata, `vbmeta` viene
-scritta sempre per ultima.
+La Release non contiene script eseguibili: contiene immagini, manifest firmato
+e checksum. Per un'installazione iniziale o da una catena non MiiClock usare
+solo il profilo completo nell'ordine seguente, dalla directory estratta del
+bundle:
+
+```bash
+sudo fastboot flash boot images/boot.img
+sudo fastboot flash recovery images/recovery.img
+sudo fastboot flash dtbo images/dtbo.img
+sudo fastboot flash vbmeta_vendor images/vbmeta_vendor.img
+sudo fastboot flash vbmeta_system images/vbmeta_system.img
+sudo fastboot flash super images/super.sparse.img
+sudo fastboot flash vbmeta images/vbmeta.img
+sudo fastboot reboot
+```
+
+Ogni comando deve terminare con `OKAY`. `vbmeta` è sempre l'ultima immagine
+scritta: al primo errore non riavviare e applicare un rollback già verificato.
+Il profilo ridotto (`vbmeta_system`, `super`, `vbmeta`) è riservato a upgrade
+interni da una baseline MiiClock nota e non è documentato per tester pubblici.
 
 Non usare mai:
 

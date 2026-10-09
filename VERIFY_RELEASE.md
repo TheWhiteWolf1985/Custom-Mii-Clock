@@ -4,7 +4,8 @@
 
 1. Confrontare i nomi degli asset con la pagina Release.
 2. Calcolare SHA-256 e confrontarlo con `SHA256SUMS`.
-3. Verificare `firmware-manifest.json` e la sua firma detached.
+3. Verificare `firmware-manifest.json` e la sua firma detached con la chiave
+   pubblica `keys/miiclock-ota-manifest-v1-public.pem`.
 4. Confermare che il device sia X04G con product `mico_x04g`.
 5. Confermare che il firmware sia la release prevista dal manifest.
 
@@ -14,8 +15,19 @@ Esempio Linux:
 sha256sum -c miiclock-x04g-firmware-1.0.0-RC1-SHA256SUMS.txt
 ```
 
-Gli script `verify-release.sh` e `verify-release.ps1` allegati alla Release
-automatizzano i controlli compatibili con il sistema operativo indicato.
+La distribuzione pubblica non contiene script eseguibili. Il controllo resta
+manuale e riproducibile; su Linux, dopo aver scaricato tutti e quattro gli
+asset firmware:
+
+```bash
+sha256sum -c miiclock-x04g-firmware-1.0.0-RC1-SHA256SUMS.txt
+openssl dgst -sha256 \
+  -verify keys/miiclock-ota-manifest-v1-public.pem \
+  -signature firmware-manifest.sig firmware-manifest.json
+```
+
+Entrambi i comandi devono terminare senza errori; il secondo deve riportare
+`Verified OK`.
 
 ## Prima dell'installazione OTA
 
