@@ -5,7 +5,9 @@
 - **Forgejo privato:** sorgente canonica, build firmate, audit completi e
   materiali riservati.
 - **GitHub pubblico:** documentazione, chiavi pubbliche, tag e asset di Release
-  verificati; non contiene sorgenti, script o GitHub Actions.
+  verificati; non contiene mirror dei sorgenti privati, script operativi o
+  GitHub Actions. I sorgenti dell'installer e delle dipendenze redistribuite
+  sono un asset separato della relativa release, per trasparenza e licenze.
 - **Clock:** verifica in locale la firma OTA e non considera GitHub una radice
   di fiducia.
 
@@ -27,6 +29,11 @@
 - Nessun push automatico Forgejo → GitHub.
 - Nessuna chiave privata, backup o credenziale su GitHub.
 - Nessun firmware asset prima del gate fisico previsto per quella release.
+- Eccezione esplicita2026-10-21: installer1.5.2 distribuito per tester senza
+  nuovo collaudo fisico, rinviato dal proprietario perché non dispone di altri
+  X04G stock. Non è una qualifica hardware: `hardware_qualified=false` resta.
+  Firmware032 riusa il bundle già costruito, verificato offline e oggetto del
+  buon esito riferito sul terzo Clock con il precedente installer.
 - Le release storiche rimangono disponibili e sono indicate come supersedute,
   salvo un motivo di sicurezza documentato per rimuoverle.
 - Una modifica al manifest o a un asset dopo la verifica richiede nuova

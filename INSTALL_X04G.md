@@ -1,5 +1,16 @@
 # Installazione firmware — solo X04G
 
+## Nuova installazione guidata: installer1.5.2 / firmware032
+
+Per il firmware0.1.20 (032) con launcher0.26.5/58 seguire la
+[guida installer Linux](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki/15-MiiClock-Installer-Linux).
+Usare soltanto ZIP, manifest e firma della release032. Il reset recovery
+manuale dopo il flash è obbligatorio nel percorso pulito e cancella i dati.
+Non mescolare con RC1/RC2. Il nuovo installer è per tester e non ha un nuovo
+collaudo fisico completo: il proprietario ha esplicitamente rinviato quel gate.
+
+Il seguito conserva il percorso manuale storico; non sostituisce la guida032.
+
 > [!warning]
 > Questa guida vale soltanto per Xiaomi Mi Smart Clock X04G. Il flash modifica
 > il firmware del device: non continuare se il prodotto Fastboot non è
