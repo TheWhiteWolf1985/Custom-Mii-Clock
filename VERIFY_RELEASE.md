@@ -1,5 +1,9 @@
 # Verifica di una release MiiClock
 
+Versioni coordinate e note operative: [RC corrente](RELEASE-CANDIDATE.md).
+Esistono **tre** manifest distinti: installer, firmware e OTA APK; non sono
+intercambiabili. Per l'APK0.26.5 usare `ota-manifest.json/.sig` della sua release.
+
 ## Installer1.5.2 e firmware032
 
 Sono due manifest distinti: `installer-manifest.json/.sig` autentica DEB,

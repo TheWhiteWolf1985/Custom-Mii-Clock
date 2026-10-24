@@ -6,6 +6,11 @@ partizioni firmware.
 
 ## Flusso utente
 
+**RC corrente0.26.5:** è una prerelease per tester, non il latest stabile.
+Il controllo sotto descritto usa `releases/latest` e quindi non la propone
+automaticamente. La release separata offre il download manuale dell'APK firmato.
+Per versione/range e limiti leggere [Release candidate corrente](RELEASE-CANDIDATE.md).
+
 1. Aprire **Impostazioni → Aggiornamenti** su MiiClock.
 2. Eseguire il controllo aggiornamenti.
 3. Leggere versione, compatibilità firmware e changelog.
@@ -31,6 +36,11 @@ GitHub distribuisce gli asset ma non è la radice di fiducia. Il manifest firmat
 e il certificato APK sono le verifiche decisive.
 
 ## Rollback APK
+
+La prima OTA partita da una versione con watchdog legacy usa inizialmente il
+vecchio watchdog: il nuovo motore non può garantire retroattivamente il recupero
+se non riesce ad avviarsi. Questa migrazione resta un test fisico dedicato, non
+una garanzia universale. I fix nativi del bootstrap richiedono firmware032.
 
 Se il nuovo APK non supera il health check, il sistema ripristina l'APK
 precedente verificato. La copia MiiClock integrata in `product` resta il

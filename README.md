@@ -10,6 +10,9 @@ controllo MediaSession e overlay vocale MiiPulse.
 
 ## Installer Linux e firmware 032 — test comunitario
 
+[**Release candidate corrente: cosa scaricare, installare e aggiornare**](RELEASE-CANDIDATE.md).
+La stessa pagina chiarisce le istruzioni storiche rimaste nel README dello ZIP032.
+
 Disponibili come **pre-release per tester**:
 
 - [MiiClock Installer 1.5.2 per Linux amd64](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/releases/tag/installer-v1.5.2), con GUI IT/EN/FR/DE/ES;
