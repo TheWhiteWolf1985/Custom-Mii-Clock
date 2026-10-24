@@ -26,6 +26,9 @@
 
 ## Regole
 
+- Stato corrente per tester: firmware0.1.20(032), launcher0.26.5/58 e installer1.5.2.
+  La prerelease `launcher-v0.26.5` pubblica APK/manifest/firma/checksum senza
+  promuovere il canale OTA stabile. Il firmware032 non è stato ricostruito.
 - Nessun push automatico Forgejo → GitHub.
 - Nessuna chiave privata, backup o credenziale su GitHub.
 - Nessun firmware asset prima del gate fisico previsto per quella release.

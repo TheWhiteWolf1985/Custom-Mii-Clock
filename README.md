@@ -1,6 +1,6 @@
 # MiiClock per Xiaomi Mi Smart Clock X04G
 
-> **Stato:** release per tester · Installer `1.5.2`, firmware `0.1.20 (032)`;
+> **Stato:** RC per tester · Installer `1.5.2`, firmware `0.1.20 (032)`, launcher `0.26.5 / 58`;
 > documentazione e asset RC1 conservati separatamente.
 > **Compatibilità:** solo Xiaomi Mi Smart Clock **X04G** con product Fastboot `mico_x04g`.
 
@@ -14,6 +14,7 @@ Disponibili come **pre-release per tester**:
 
 - [MiiClock Installer 1.5.2 per Linux amd64](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/releases/tag/installer-v1.5.2), con GUI IT/EN/FR/DE/ES;
 - [firmware 0.1.20 (032), launcher 0.26.5/58 integrato](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/releases/tag/firmware-v0.1.20);
+- [APK separato launcher 0.26.5/58 e manifest OTA firmato](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/releases/tag/launcher-v0.26.5), prerelease;
 - [guida passo passo con installer](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki/15-MiiClock-Installer-Linux).
 
 Il nuovo installer è verificato via software; il suo collaudo fisico completo
@@ -22,6 +23,16 @@ Solo X04G, PC Linux fisico compatibile, backup personale verificato. La prima
 installazione pulita impone il reset manuale **dopo** il flash e cancella i dati.
 Le sezioni RC1 sotto descrivono la vecchia release: non mescolarne gli asset
 con032. L'installer usa un tag firmware esplicito, mai latest/RC1 come fallback.
+
+### Aggiornamento del solo APK — RC 0.26.5
+
+L'APK separato è byte-identico a quello incorporato nel firmware032. Il manifest
+firmato ammette firmware build27–32; le correzioni native di032 non vengono però
+introdotte dal solo APK. La prima migrazione dal watchdog OTA legacy richiede
+ancora collaudo fisico dedicato: consultare i limiti nelle note della release.
+Il download manuale dell'APK non richiede flash o reset. Questa prerelease non
+è proposta da `/releases/latest`: il canale OTA stabile resta distinto e non è
+stato promosso. Verificare i quattro asset ufficiali, non mescolare i manifest.
 
 ## Prima di scaricare
 
