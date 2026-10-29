@@ -1,106 +1,32 @@
 # MiiClock per Xiaomi Mi Smart Clock X04G
 
-> **Stato:** RC per tester · Installer `1.5.2`, firmware `0.1.20 (032)`, launcher `0.26.5 / 58`;
-> documentazione e asset RC1 conservati separatamente.
-> **Compatibilità:** solo Xiaomi Mi Smart Clock **X04G** con product Fastboot `mico_x04g`.
+**Italiano** · [English](README.en.md)
 
-MiiClock è un firmware derivato dal software stock X04G con un launcher
-autonomo per Home, calendario locale, meteo, sveglie, Home Assistant, MQTT,
-controllo MediaSession e overlay vocale MiiPulse.
+> Installer 1.5.2 · firmware 0.1.20 (032) · launcher 0.26.5 / versionCode 58
+>
+> Release candidate corrente per tester. Solo X04G.
 
-## Installer Linux e firmware 032 — test comunitario
+MiiClock è un firmware derivato dalla stock X04G con launcher per orologio, sveglie locali, meteo, calendario consultivo, dashboard Home Assistant persistente, MQTT, controlli MediaSession e overlay visivo Assistant MiiPulse. Compatibilità esclusiva **X04G / `mico_x04g`**.
 
-[**Release candidate corrente: cosa scaricare, installare e aggiornare**](RELEASE-CANDIDATE.md).
-La stessa pagina chiarisce le istruzioni storiche rimaste nel README dello ZIP032.
+Il proprietario riferisce funzionamento sui suoi tre Clock. La distribuzione resta una **RC sperimentale per tester**, con qualifica fisica completa dell'installer 1.5.2 e del recupero ancora pendente. [Versioni, prove e limiti](Documentazione/it/01-Release.md).
 
-Disponibili come **pre-release per tester**:
+## Installare e configurare
 
-- [MiiClock Installer 1.5.2 per Linux amd64](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/releases/tag/installer-v1.5.2), con GUI IT/EN/FR/DE/ES;
-- [firmware 0.1.20 (032), launcher 0.26.5/58 integrato](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/releases/tag/firmware-v0.1.20);
-- [APK separato launcher 0.26.5/58 e manifest OTA firmato](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/releases/tag/launcher-v0.26.5), prerelease;
-- [guida passo passo con installer](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki/15-MiiClock-Installer-Linux).
+- [Download della RC e scelta dei file](RELEASE-CANDIDATE.md).
+- [Requisiti Linux](Documentazione/it/07-Linux-Requirements.md): PC fisico x86_64 compatibile, pacchetto DEB e USB diretta.
+- [Guida completa installer](Documentazione/it/08-Installation.md): backup verificato, sblocco, flash e **reset manuale dopo il flash completo**, con cancellazione dei dati.
+- [Home Assistant e MQTT](Documentazione/it/05-Home-Assistant-MQTT.md).
+- [Aggiornamento del solo APK](Documentazione/it/10-APK-Updates.md).
+- [Recupero e interruzioni](Documentazione/it/09-Recovery.md).
 
-Il nuovo installer è verificato via software; il suo collaudo fisico completo
-è rinviato ai tester per esplicita decisione del proprietario, non dichiarato PASS.
-Solo X04G, PC Linux fisico compatibile, backup personale verificato. La prima
-installazione pulita impone il reset manuale **dopo** il flash e cancella i dati.
-Le sezioni RC1 sotto descrivono la vecchia release: non mescolarne gli asset
-con032. L'installer usa un tag firmware esplicito, mai latest/RC1 come fallback.
+## Documentazione della RC
 
-### Aggiornamento del solo APK — RC 0.26.5
+[Indice completo](Documentazione/it/00-Index.md) · [Launcher](Documentazione/it/03-Launcher.md) · [Funzioni locali](Documentazione/it/04-Clock-Calendar-Weather-Alarms.md) · [Media e Assistant](Documentazione/it/06-Media-Assistant-MiiPulse.md) · [Sicurezza e limiti noti](Documentazione/it/11-Security-Limits.md) · [Verifica firme](Documentazione/it/12-Verification.md) · [Supporto](SUPPORT.md).
 
-L'APK separato è byte-identico a quello incorporato nel firmware032. Il manifest
-firmato ammette firmware build27–32; le correzioni native di032 non vengono però
-introdotte dal solo APK. La prima migrazione dal watchdog OTA legacy richiede
-ancora collaudo fisico dedicato: consultare i limiti nelle note della release.
-Il download manuale dell'APK non richiede flash o reset. Questa prerelease non
-è proposta da `/releases/latest`: il canale OTA stabile resta distinto e non è
-stato promosso. Verificare i quattro asset ufficiali, non mescolare i manifest.
+Tutta la documentazione corrente è disponibile in italiano e inglese. Anche la GUI dell'installer offre IT/EN/FR/DE/ES. La [Wiki](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki) contiene gli stessi argomenti nelle due lingue.
 
-## Prima di scaricare
+## Distribuzione e licenze
 
-- Non installare su LX04 o su altri smart display Xiaomi.
-- Leggere prima [Installazione X04G](INSTALL_X04G.md),
-  [Verifica della release](VERIFY_RELEASE.md) e [Recovery X04G](RECOVERY_X04G.md).
-- L'installer Linux guida il flash del firmware032; la guida Fastboot manuale
-  RC1 resta distinta. L'OTA aggiorna invece soltanto l'APK del launcher.
-- La release RC1 è destinata a test controllati: segnalare regressioni seguendo
-  [Supporto](SUPPORT.md).
+GitHub pubblica documentazione, chiavi pubbliche e asset verificati; la sorgente tecnica canonica è privata. I sorgenti dell'installer e delle dipendenze redistribuite sono un asset separato della release. GitHub non è la radice di fiducia: verificare firme e checksum.
 
-> **Gate firmware:** il bundle firmware 028 ha superato le verifiche offline,
-> il flash controllato e il collaudo su X04G. La Release pubblica resta una
-> **pre-release** destinata a tester consapevoli, non una garanzia universale.
-
-## Funzioni principali
-
-- launcher MiiClock e Home post-provisioning;
-- calendario locale AOSP con CRUD;
-- meteo MET Norway con configurazione località senza GPS;
-- sveglie autonome;
-- dashboard Home Assistant in WebView isolata e tastiera touch;
-- integrazione MQTT Discovery con comandi soggetti a allowlist;
-- MediaSession Android e compatibilità con riproduzioni esterne;
-- MiiPulse, overlay visivo per Assistant senza registrare audio;
-- OTA firmato del solo APK;
-- ADB root via USB, AVB attiva e ADB TCP disabilitato.
-
-## Versioni della RC1
-
-| Componente | Versione |
-| --- | --- |
-| Firmware | `0.1.16 (028)` |
-| Launcher | `0.25.2`, `versionCode 51` |
-| Package | `local.miiclock.launcher` |
-| Range OTA APK | firmware build `27–28` |
-
-L'APK integrato nel firmware e l'APK OTA devono essere byte-identici. I valori
-di hash, certificato e compatibilità sono riportati in
-[RELEASE-METADATA.json](RELEASE-METADATA.json).
-
-## Documentazione
-
-- [Wiki del progetto](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki)
-- [Architettura firmware](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki/03-Architettura-Firmware-e-Build)
-- [Launcher e interfaccia](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki/04-Launcher-e-Interfaccia)
-- [Home Assistant, WebView e MQTT](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki/07-Home-Assistant-WebView-MQTT)
-- [OTA e distribuzione APK](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki/08-OTA-e-Distribuzione-APK)
-- [Decisioni, rischi e limiti](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/wiki/11-Decisioni-Rischi-e-Limiti)
-
-## Repository e release
-
-Forgejo è la sorgente tecnica privata e canonica. Questo repository GitHub
-pubblica soltanto documentazione, chiavi pubbliche e asset verificati di
-Release: non contiene mirror dei sorgenti privati, script operativi o GitHub
-Actions. La release installer include un archivio sorgenti separato per
-trasparenza e licenze dei componenti redistribuiti, non una pipeline pubblica. GitHub non è
-la radice di fiducia dell'OTA. Per la politica completa vedere
-[RELEASES.md](RELEASES.md).
-
-## Licenze e attribuzioni
-
-- Codice e script originali MiiClock: [Apache-2.0](LICENSE).
-- Documentazione e immagini originali MiiClock: [CC BY 4.0](LICENSE-DOCUMENTATION.md).
-- Componenti di terzi e firmware derivato: vedere [NOTICE.md](NOTICE.md).
-
-Nessuna licenza MiiClock può concedere diritti sui componenti Xiaomi, Google o
-su altri componenti di terzi inclusi nel firmware derivato.
+Codice originale: [Apache-2.0](LICENSE). Documentazione e immagini originali: [CC BY 4.0](LICENSE-DOCUMENTATION.md). Componenti stock e di terzi mantengono le rispettive licenze: [Notice](NOTICE.md).

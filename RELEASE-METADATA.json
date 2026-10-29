@@ -1,37 +1,51 @@
 {
-  "schema_version": 1,
-  "release": "MiiClock 1.0.0-RC1",
-  "tag": "v1.0.0-RC1",
+  "schema_version": 2,
+  "release": "MiiClock X04G RC 032",
   "status": "pre-release",
+  "documentation_updated": "2026-10-29",
   "device": {
     "name": "Xiaomi Mi Smart Clock X04G",
     "fastboot_product": "mico_x04g",
     "android": "10 / API 29"
   },
+  "installer": {
+    "version": "1.5.2",
+    "tag": "installer-v1.5.2",
+    "hardware_qualified": false
+  },
   "firmware": {
-    "version": "0.1.16",
-    "build": 28,
-    "label": "028",
-    "release_name": "x04g-firmware-028-launcher-0.25.2",
-    "physical_flash_status": "passed-on-x04g-2026-10-08"
+    "version": "0.1.20",
+    "build": 32,
+    "label": "032",
+    "tag": "firmware-v0.1.20",
+    "archive_sha256": "d7b5db518c5468d9ad01e04af6495692b9bc8883fe28680d124033eb70a4f9bb"
   },
   "launcher": {
     "package": "local.miiclock.launcher",
-    "version": "0.25.2",
-    "version_code": 51,
-    "apk_sha256": "a64c76571a9e3aeadd4870a7f60a5829edd14efb3adcae9d75d1e891279c2562",
+    "version": "0.26.5",
+    "version_code": 58,
+    "tag": "launcher-v0.26.5",
+    "apk_sha256": "3b03ed8eb03972b589a032388f3e233f6e66eddff73688b4d8880f17b2655c5d",
     "android_certificate_sha256": "7340f6343323e0474c4b6afc0e5891aa9e7f5d5176606be82b6124a39631c029",
     "ota_firmware_min": 27,
-    "ota_firmware_max": 28
+    "ota_firmware_max": 32,
+    "automatically_offered_by_stable_latest": false
+  },
+  "validation": {
+    "software_and_artifacts": "passed-in-2026-10-24-audit",
+    "owner_usage_report": "working-on-three-personal-clocks-reported-2026-10-29",
+    "complete_installer_physical_qualification": "pending",
+    "legacy_first_ota_migration": "pending"
   },
   "distribution": {
-    "source_of_truth": "Forgejo private repository",
-    "github_role": "public documentation, selected source and Release assets",
+    "source_of_truth": "private Forgejo repository",
+    "github_role": "public documentation, public keys and verified release assets",
     "automatic_publication": false
   },
   "licensing": {
     "source_code_and_scripts": "Apache-2.0",
     "documentation_and_original_media": "CC-BY-4.0",
     "third_party_and_derived_firmware": "see NOTICE.md; not relicensed by MiiClock"
-  }
+  },
+  "notice": "Descriptive metadata only; authenticate downloads using their original signed release manifests."
 }

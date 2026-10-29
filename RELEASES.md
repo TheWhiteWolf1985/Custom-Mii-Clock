@@ -1,43 +1,17 @@
-# Politica di rilascio
+# Distribuzione della RC
 
-## Ruoli dei sistemi
+**Italiano** · [English](RELEASES.en.md)
 
-- **Forgejo privato:** sorgente canonica, build firmate, audit completi e
-  materiali riservati.
-- **GitHub pubblico:** documentazione, chiavi pubbliche, tag e asset di Release
-  verificati; non contiene mirror dei sorgenti privati, script operativi o
-  GitHub Actions. I sorgenti dell'installer e delle dipendenze redistribuite
-  sono un asset separato della relativa release, per trasparenza e licenze.
-- **Clock:** verifica in locale la firma OTA e non considera GitHub una radice
-  di fiducia.
+> Installer 1.5.2 · firmware 0.1.20 (032) · launcher 0.26.5 / versionCode 58
+>
+> Release candidate corrente per tester. Solo X04G.
 
-## Procedura obbligatoria
+La terna pubblica è installer 1.5.2, firmware 0.1.20 (032) e launcher 0.26.5/58. Le tre release restano prerelease per tester; la RC APK non promuove il canale stabile `releases/latest`.
 
-1. Congelare versione, versionCode, firmware supportati e changelog.
-2. Eseguire la pipeline Forgejo firmata e le doppie build riproducibili.
-3. Verificare checksum, firma APK, manifest OTA, AVB e audit firmware.
-4. Costruire e validare l'export pubblico con gli strumenti di preparazione.
-5. Creare un tag GitHub corrispondente al commit export approvato.
-6. Creare una GitHub Release in stato draft.
-7. Caricare manualmente gli asset verificati, confrontare hash e nomi.
-8. Pubblicare come pre-release o release stabile in base all'accettazione.
-9. Rendere la release immutabile se la configurazione GitHub del repository lo
-   consente.
+Forgejo privato è la sorgente tecnica e di build. GitHub distribuisce documentazione, chiavi pubbliche e asset verificati. La pubblicazione richiede controllo di nomi, versioni, firme, checksum, compatibilità e limiti di accettazione. Non è previsto push automatico della sorgente privata su GitHub.
 
-## Regole
+Le firme e gli asset pubblicati restano immutati durante aggiornamenti documentali. Una modifica ai file distribuiti richiede nuova validazione e una pubblicazione esplicita, non ricaricamento silenzioso.
 
-- Stato corrente per tester: firmware0.1.20(032), launcher0.26.5/58 e installer1.5.2.
-  La prerelease `launcher-v0.26.5` pubblica APK/manifest/firma/checksum senza
-  promuovere il canale OTA stabile. Il firmware032 non è stato ricostruito.
-- Nessun push automatico Forgejo → GitHub.
-- Nessuna chiave privata, backup o credenziale su GitHub.
-- Nessun firmware asset prima del gate fisico previsto per quella release.
-- Eccezione esplicita2026-10-21: installer1.5.2 distribuito per tester senza
-  nuovo collaudo fisico, rinviato dal proprietario perché non dispone di altri
-  X04G stock. Non è una qualifica hardware: `hardware_qualified=false` resta.
-  Firmware032 riusa il bundle già costruito, verificato offline e oggetto del
-  buon esito riferito sul terzo Clock con il precedente installer.
-- Le release storiche rimangono disponibili e sono indicate come supersedute,
-  salvo un motivo di sicurezza documentato per rimuoverle.
-- Una modifica al manifest o a un asset dopo la verifica richiede nuova
-  validazione, non un semplice ricaricamento silenzioso.
+La RC installer 1.5.2 è distribuita senza nuova qualifica fisica completa, dichiarata `hardware_qualified=false`. Il riscontro del proprietario sui tre Clock non certifica ogni esemplare o percorso di recupero.
+
+[Download](RELEASE-CANDIDATE.md) · [Verifiche](Documentazione/it/12-Verification.md) · [Sviluppo e licenze](Documentazione/it/13-Development-Licenses.md).

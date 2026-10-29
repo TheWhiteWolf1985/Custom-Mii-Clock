@@ -1,18 +1,13 @@
 # Segnalazioni di sicurezza
 
-Non pubblicare issue con chiavi, token, credenziali, seriali, MAC, backup,
-log ADB completi, dettagli di bypass bootloader o istruzioni di sfruttamento.
+**Italiano** · [English](SECURITY.en.md)
 
-Per una vulnerabilità, contattare privatamente il maintainer del repository
-indicando:
+> Installer 1.5.2 · firmware 0.1.20 (032) · launcher 0.26.5 / versionCode 58
+>
+> Release candidate corrente per tester. Solo X04G.
 
-- versione firmware e launcher;
-- modello confermato X04G;
-- impatto osservato;
-- passi minimi riproducibili senza dati personali;
-- eventuali log redatti;
-- proposta di mitigazione, se disponibile.
+Per vulnerabilità in OTA, firme, AVB, ADB/root, MQTT, WebView o installer contattare privatamente il maintainer del repository. Includere modello X04G, versioni della RC, impatto osservato, passi minimi riproducibili senza dati personali, log redatti e mitigazione proposta se disponibile.
 
-Le vulnerabilità che coinvolgono OTA, firma, ADB/root, AVB, MQTT o WebView sono
-trattate come prioritarie. Attendere la correzione o un accordo esplicito prima
-di pubblicare dettagli tecnici.
+Non pubblicare chiavi, token, credenziali, backup, log ADB completi, identificativi personali o dettagli di sfruttamento in issue pubbliche. Attendere una correzione o un accordo esplicito prima della divulgazione tecnica.
+
+[Modello di sicurezza e limiti della RC](Documentazione/it/11-Security-Limits.md).

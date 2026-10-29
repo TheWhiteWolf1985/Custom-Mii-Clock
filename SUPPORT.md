@@ -1,28 +1,21 @@
-# Supporto e segnalazione problemi
+# Supporto e segnalazioni
 
-Prima di aprire una segnalazione:
+**Italiano** · [English](SUPPORT.en.md)
 
-1. verificare che il device sia Xiaomi Mi Smart Clock X04G / `mico_x04g`;
-2. indicare firmware, build, launcher e `versionCode`;
-3. indicare se l'installazione è firmware Fastboot, installer Linux o update OTA;
-4. riprodurre il problema una seconda volta, se non comporta rischio;
-5. allegare screenshot o log **redatti**.
+> Installer 1.5.2 · firmware 0.1.20 (032) · launcher 0.26.5 / versionCode 58
+>
+> Release candidate corrente per tester. Solo X04G.
 
-Per Installer1.5.2 indicare inoltre distro/versione, architettura, versione
-installer e numero del passaggio. Usare **Apri cartella dei log** nella cartella
-personale e leggere il report redatto prima di condividerlo. Non allegare
-backup, seriali, MAC, password, token o account. Un problema durante una scrittura
-non va riprodotto alla cieca: fermarsi senza reboot o comandi distruttivi.
-La revisione1.5.2 è un candidato comunitario senza nuovo collaudo fisico completo.
+Aprire una issue nel repository indicando:
 
-## Fuori supporto
+- Xiaomi Mi Smart Clock X04G / `mico_x04g` e problema osservato.
+- Firmware 0.1.20 (032), launcher 0.26.5/58 e installer 1.5.2, precisando quale componente è coinvolto.
+- Distribuzione Linux/versione, architettura e numero del passaggio installer, se pertinente.
+- Percorso eseguito: prima installazione firmware, aggiornamento APK o recupero.
+- Risultato atteso, risultato reale e screenshot/report redatto.
 
-- LX04 e altri modelli;
-- GSI, LineageOS e firmware di terze parti;
-- immagini non provenienti dalla Release indicata;
-- problemi causati da erase, format, bypass AVB o procedure non documentate;
-- richiesta di assistenza per credenziali Home Assistant, Wi-Fi o MQTT.
+Usare **Apri cartella dei log** e leggere il report prima di condividerlo. Non allegare dump, journal grezzi con dati privati, seriali, MAC, account, password, token o chiavi. Per una scrittura fallita non ripetere il problema alla cieca: fermarsi senza reboot e seguire [Recupero](Documentazione/it/09-Recovery.md).
 
-Per regressioni RC1, descrivere anche quali funzioni continuano a funzionare:
-boot, ADB USB, Home, Assistant, rete, meteo, sveglie, calendario, media e
-Home Assistant.
+Non sono coperti LX04/altri modelli, firmware di terzi, immagini non corrispondenti alle release o procedure di erase/format/bypass non documentate. Il progetto non gestisce le credenziali personali Home Assistant, Google o MQTT.
+
+[Limiti noti e stato delle prove](Documentazione/it/11-Security-Limits.md) · [Segnalazioni di sicurezza](SECURITY.md).

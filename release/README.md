@@ -1,12 +1,11 @@
-# Metadati delle release
+# Metadati della RC corrente
 
-Questa cartella contiene soltanto i metadati dell'export pubblico e non è una
-pipeline di build. Gli APK, i manifest OTA firmati, i bundle firmware e gli
-hash associati vengono pubblicati esclusivamente come asset delle singole
-GitHub Release.
+**Italiano** · [English](README.en.md)
 
-Ogni asset pubblicato deve corrispondere alla versione, al package, agli hash e
-alla compatibilità riportati in [../RELEASE-METADATA.json](../RELEASE-METADATA.json).
+> Installer 1.5.2 · firmware 0.1.20 (032) · launcher 0.26.5 / versionCode 58
+>
+> Release candidate corrente per tester. Solo X04G.
 
-Non vengono mantenuti qui script, sorgenti, GitHub Actions, chiavi private,
-backup, firmware stock o candidati di build.
+Questa cartella contiene metadati descrittivi dell'export documentale corrente. Non sostituiscono i manifest firmati delle release installer, firmware e APK, che restano gli strumenti di autenticazione dei rispettivi asset.
+
+[Versioni e download](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/blob/main/RELEASE-CANDIDATE.md) · [Documentazione italiana](https://github.com/TheWhiteWolf1985/Custom-Mii-Clock/blob/main/Documentazione/it/00-Index.md).

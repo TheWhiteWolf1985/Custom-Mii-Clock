@@ -1,29 +1,21 @@
 # Notice e attribuzioni
 
-MiiClock usa e integra componenti, protocolli o dati soggetti a licenze e
-termini propri. Questo file non sostituisce le rispettive licenze.
+**Italiano** · [English](NOTICE.en.md)
 
-## Licenze MiiClock
+> Installer 1.5.2 · firmware 0.1.20 (032) · launcher 0.26.5 / versionCode 58
+>
+> Release candidate corrente per tester. Solo X04G.
+
+MiiClock usa componenti, protocolli e dati con licenze e condizioni proprie. Questo documento non sostituisce tali licenze.
 
 - Codice e script originali MiiClock: [Apache-2.0](LICENSE).
-- Documentazione e immagini originali MiiClock: [CC BY 4.0](LICENSE-DOCUMENTATION.md).
+- Documentazione e immagini originali: [CC BY 4.0](LICENSE-DOCUMENTATION.md).
+- Android e AOSP: licenze dei rispettivi componenti.
+- MET Norway Locationforecast 2.0: condizioni e attribuzioni del fornitore meteo.
+- Open-Meteo/GeoNames: condizioni della ricerca località e dei dati utilizzati.
+- Home Assistant, MQTT, Xiaomi e Google: marchi o prodotti dei rispettivi titolari.
+- CPython, Qt/PySide e dipendenze dell'installer: avvisi e inventario componenti inclusi nella release installer.
 
-- Android e AOSP sono soggetti alle licenze dei rispettivi componenti.
-- MET Norway Locationforecast 2.0 fornisce i dati meteo secondo le proprie
-  condizioni e attribuzioni.
-- Open-Meteo/GeoNames sono usati per la ricerca località secondo le rispettive
-  condizioni.
-- Home Assistant, MQTT, Xiaomi e Google sono marchi o prodotti dei rispettivi
-  titolari.
-- Il firmware deriva da componenti stock Xiaomi/Google. MiiClock non rivendica
-  alcun diritto su tali componenti né può concederne licenza.
+Il firmware 0.1.20 (032) deriva da componenti stock Xiaomi/Google. MiiClock non ne rivendica i diritti e non può concederne licenza. La licenza del progetto copre solo il suo materiale originale; il perimetro redistribuibile dei componenti terzi richiede verifica separata.
 
-La licenza MiiClock copre esclusivamente il materiale originale identificato
-sopra. La pubblicazione di un firmware derivato richiede una verifica separata
-del perimetro redistribuibile per ogni release.
-
-La release `1.0.0-RC1` è pubblicata come firmware derivato per ricerca,
-interoperabilità e test esclusivamente su hardware X04G posseduto dal tester.
-È fornita senza garanzie; chi la installa conserva un proprio backup e piano di
-recupero. Questa nota non modifica né sostituisce le licenze dei componenti di
-terzi inclusi nel firmware.
+La RC è destinata a ricerca, interoperabilità e test su X04G posseduto dal tester, senza garanzie. Chi installa conserva un proprio backup e piano di recupero. Questa nota non modifica le licenze dei componenti di terzi e non è una certificazione legale.
